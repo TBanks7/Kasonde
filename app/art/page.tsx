@@ -7,36 +7,39 @@ import { motion, AnimatePresence } from 'framer-motion'
 type Section = 'galleries' | 'workshops' | 'drag'
 
 const galleryImages = [
-  { id: 1, url: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&h=1000&fit=crop', title: 'Abstract Emotion I' },
-  { id: 2, url: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?w=600&h=800&fit=crop', title: 'Urban Dreams' },
-  { id: 3, url: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=800&h=600&fit=crop', title: 'Color Theory' },
-  { id: 4, url: 'https://images.unsplash.com/photo-1549887534-1541e9326642?w=600&h=900&fit=crop', title: 'Fluid Forms' },
-  { id: 5, url: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=900&h=600&fit=crop', title: 'Texture Study' },
-  { id: 6, url: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=700&h=900&fit=crop', title: 'Movement' },
-  { id: 7, url: 'https://images.unsplash.com/photo-1577083300597-dca35f07cc52?w=800&h=1000&fit=crop', title: 'Canvas Dreams' },
-  { id: 8, url: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=800&fit=crop', title: 'Bold Strokes' },
+  { id: 1, url: '/Poker With Life.JPG', title: 'Poker With Life' },
+  { id: 2, url: '/I Hope what you did to me haunts you.JPG', title: 'I Hope what you did to me haunts you' },
+  { id: 3, url: '/Seeing in Black and White .JPG', title: 'Seeing in Black and White' },
+  { id: 4, url: '/The Destruction of Self .JPG', title: 'The Destruction of Self' },
+  { id: 5, url: '/Red.JPG', title: 'Red' },
+  // { id: 6, url: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=700&h=900&fit=crop', title: 'Movement' },
+  // { id: 7, url: 'https://images.unsplash.com/photo-1577083300597-dca35f07cc52?w=800&h=1000&fit=crop', title: 'Canvas Dreams' },
+  // { id: 8, url: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=800&fit=crop', title: 'Bold Strokes' },
 ]
 
 const workshops = [
   {
     id: 1,
-    title: 'Acrylic Fundamentals',
-    description: 'Learn the basics of acrylic painting in this hands-on workshop. Perfect for beginners.',
-    date: 'March 15, 2024',
-    status: 'upcoming',
+    title: 'BIPOC Gallery Day',
+    description: 'A day dedicated to showcasing the work of BIPOC artists, with gallery tours, artist talks, and networking opportunities.',
+    location: 'Art Space, 378 Alymer St N, Peterborough',
+    date: 'July 19, 2025',
+    status: 'Past',
   },
   {
     id: 2,
-    title: 'Abstract Expression',
-    description: 'Explore abstract techniques and find your unique artistic voice.',
-    date: 'April 22, 2024',
-    status: 'upcoming',
+    title: 'Paint it Black',
+    description: 'Join us for a day of collective creation! Explore your creative side and immerse yourself in community',
+    location: 'Art Space, 378 Alymer St N, Peterborough',
+    date: 'February 28, 2026',
+    status: 'past',
   },
   {
     id: 3,
-    title: 'Color Theory Masterclass',
-    description: 'Deep dive into color relationships, harmony, and contrast.',
-    date: 'January 10, 2024',
+    title: 'EXPLOITATION OF IMMIGRANTS: A COUNTER PUBLIC CONVERSATION',
+    description: 'A panel discussion and workshop exploring the exploitation of immigrants.',
+    location: 'TPS Coffee House.',
+    date: 'March 13, 2025',
     status: 'past',
   },
 ]
@@ -128,7 +131,7 @@ export default function ArtPage() {
                       height={1000}
                       className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/30 transition-all duration-300" />
+                    <div className="absolute inset-0 bg-primary/0 transition-all duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <p className="text-cream font-medium">{image.title}</p>
                     </div>
@@ -170,6 +173,7 @@ export default function ArtPage() {
                     </span>
                   </div>
                   <p className="text-cream/70 mb-4">{workshop.description}</p>
+                  <p className="text-cream/50 text-sm mb-6">{workshop.location}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-cream/50 text-sm">{workshop.date}</span>
                     {workshop.status === 'upcoming' && (

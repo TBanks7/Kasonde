@@ -8,24 +8,31 @@ type Section = 'audio' | 'video'
 const audioEpisodes = [
   {
     id: 1,
-    title: 'Conversations in Color',
-    description: 'A deep dive into how color theory shapes contemporary art with guest curator Maya Chen.',
-    duration: '42:15',
-    audioUrl: '#',
+    title: 'All the Wins',
+    description: 'A conversation about the small victories in the creative process and how they fuel our passion and perseverance.',
+    duration: '18:26',
+    audioUrl: '/audio/All the Winss.m4a',
   },
   {
     id: 2,
-    title: 'The Artist Economy',
-    description: 'Exploring sustainable models for creative practice in the age of digital platforms.',
-    duration: '38:20',
-    audioUrl: '#',
+    title: 'Celebrities',
+    description: 'Exploring the intersection of fame, identity, and authenticity in the digital age.',
+    duration: '30:16',
+    audioUrl: '/audio/Celebrities.mp3',
   },
   {
     id: 3,
-    title: 'Performance as Protest',
+    title: 'I Like To Think with Tapchinn - Part 1',
     description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
-    duration: '51:30',
-    audioUrl: '#',
+    duration: '28:04',
+    audioUrl: '/audio/ILiketoThinkwithTapspt1.mp3',
+  },
+  {
+    id: 4,
+    title: 'I Like To Think with Tapchinn - Part 2',
+    description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
+    duration: '30:24',
+    audioUrl: '/audio/ILike2ThinkwithTapspt2.mp3',
   },
 ]
 

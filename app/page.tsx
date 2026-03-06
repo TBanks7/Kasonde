@@ -21,7 +21,7 @@ const tiles: Tile[] = [
     title: 'Art',
     subtitle: 'Galleries · Workshops · Drag',
     href: '/art',
-    image: '/art.png',
+    image: '/art.webp',
     size: 'col-span-2 row-span-2', // Largest - 2x2
   },
   {
@@ -29,31 +29,31 @@ const tiles: Tile[] = [
     title: 'Essays',
     subtitle: 'Think pieces · Academia',
     href: '/essays',
-    image: '/essay.png',
+    image: '/essay.webp',
     size: 'col-span-1 row-span-1',
   },
   {
     id: 'radio',
     title: 'Radio',
-    subtitle: 'Audio · Video',
+    subtitle: 'I Like To Think',
     href: '/radio',
-    image: '/radio.png',
-    size: 'col-span-1 row-span-2', // Tall
+    image: '/iliketothink.webp',
+    size: 'col-span-1 row-span-1',
   },
   {
     id: 'vlogs',
     title: 'Vlogs',
     subtitle: 'Life in motion',
     href: '/vlogs',
-    image: '/vlog.png',
-    size: 'col-span-1 row-span-1',
+    image: '/vlog.webp',
+    size: 'col-span-1 row-span-2', // Tall
   },
   {
     id: 'events',
     title: 'Events',
     subtitle: 'What\'s coming up',
     href: '/events',
-    image: '/events.png',
+    image: '/events.webp',
     size: 'col-span-2 row-span-1', // Wide
   },
   {
@@ -61,17 +61,17 @@ const tiles: Tile[] = [
     title: 'Socials',
     subtitle: 'Find me everywhere',
     href: '/socials',
-    image: '/socials.png',
+    image: '/socials.webp',
     size: 'col-span-1 row-span-1',
   },
-  {
-    id: 'contact',
-    title: 'Contact',
-    subtitle: 'Say hello',
-    href: '/contact',
-    image: '/contact.png',
-    size: 'col-span-1 row-span-1',
-  },
+  // {
+  //   id: 'contact',
+  //   title: 'Contact',
+  //   subtitle: 'Say hello',
+  //   href: '/contact',
+  //   image: '/contact.webp',
+  //   size: 'col-span-1 row-span-1',
+  // },
 ]
 
 function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
@@ -81,7 +81,7 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      transition={{ duration: 0.3, delay: index * 0.03 }}
       className={tile.size}
     >
       <Link
@@ -98,6 +98,7 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
           />
         </div>
 
@@ -142,7 +143,7 @@ export default function Home() {
         {/* Photo */}
         <div className="absolute inset-0">
           <Image
-            src="/kas.png"
+            src="/kas.webp"
             alt="Kasonde"
             fill
             className="object-cover"
