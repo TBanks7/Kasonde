@@ -50,7 +50,7 @@ const vlogs: any[] = [
 ]
 
 const EmptyState = () => (
-  <div className="flex flex-col items-center justify-center py-40 gap-0">
+  <div className="flex flex-col items-center justify-center py-10 gap-0">
     {/* Floating character */}
     <div className="animate-[float_3.8s_ease-in-out_infinite]">
       <svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
