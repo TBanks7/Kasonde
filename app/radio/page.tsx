@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 type Section = 'audio' | 'video'
@@ -11,12 +11,12 @@ const audioEpisodes = [
     title: 'All the Wins',
     description: 'A conversation about the small victories in the creative process and how they fuel our passion and perseverance.',
     duration: '18:26',
-    audioUrl: '/audio/All the Winss.m4a',
+    audioUrl: '/audio/All the Winss.mp3',
   },
   {
     id: 2,
     title: 'Celebrities',
-    description: 'Exploring the intersection of fame, identity, and authenticity in the digital age.',
+    description: 'Today, we’re diving deep into a topic that’s both fascinating and complex: the influence of celebrities in our lives. Why do we find ourselves so captivated by these figures who are, in many ways, famous for simply being famous? What does our admiration say about our values and desires?',
     duration: '30:16',
     audioUrl: '/audio/Celebrities.mp3',
   },
@@ -64,6 +64,7 @@ export default function RadioPage() {
   const [activeSection, setActiveSection] = useState<Section>('audio')
   const [playingId, setPlayingId] = useState<number | null>(null)
   const [videoModal, setVideoModal] = useState<string | null>(null)
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-6">
@@ -78,7 +79,7 @@ export default function RadioPage() {
           Radio
         </h1>
         <p className="text-cream/60 text-lg max-w-2xl">
-          Long-form conversations, studio sessions, and visual stories. 
+          Long-form conversations, studio sessions, and visual stories.
           Audio essays and video explorations.
         </p>
       </motion.div>
@@ -90,11 +91,10 @@ export default function RadioPage() {
             <button
               key={section}
               onClick={() => setActiveSection(section)}
-              className={`pb-4 text-lg font-medium capitalize transition-all duration-300 relative ${
-                activeSection === section
-                  ? 'text-gold'
-                  : 'text-cream/50 hover:text-cream/80'
-              }`}
+              className={`pb-4 text-lg font-medium capitalize transition-all duration-300 relative ${activeSection === section
+                ? 'text-gold'
+                : 'text-cream/50 hover:text-cream/80'
+                }`}
             >
               {section}
               {activeSection === section && (
@@ -132,16 +132,25 @@ export default function RadioPage() {
                   <div className="flex items-start gap-6">
                     {/* Play Button */}
                     <button
-                      onClick={() => setPlayingId(playingId === episode.id ? null : episode.id)}
+                      onClick={() => {
+                        if (playingId === episode.id) {
+                          // Pause current episode
+                          audioRef.current?.pause();
+                          setPlayingId(null);
+                        } else {
+                          // Switch to new episode
+                          setPlayingId(episode.id);
+                        }
+                      }}
                       className="flex-shrink-0 w-16 h-16 rounded-full bg-gold/20 border border-gold flex items-center justify-center hover:bg-gold hover:border-gold transition-all duration-300 group"
                     >
                       {playingId === episode.id ? (
                         <svg className="w-6 h-6 text-gold group-hover:text-background" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
                         </svg>
                       ) : (
                         <svg className="w-6 h-6 text-gold group-hover:text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
+                          <path d="M8 5v14l11-7z" />
                         </svg>
                       )}
                     </button>
@@ -164,7 +173,13 @@ export default function RadioPage() {
                       exit={{ opacity: 0, height: 0 }}
                       className="mt-6 pt-6 border-t border-cream/10"
                     >
-                      <audio controls className="w-full">
+                      <audio
+                        ref={audioRef}
+                        controls
+                        autoPlay                              // ✅ auto-plays when mounted
+                        className="w-full"
+                        onEnded={() => setPlayingId(null)}    // ✅ resets state when audio ends
+                      >
                         <source src={episode.audioUrl} type="audio/mpeg" />
                         Your browser does not support the audio element.
                       </audio>
@@ -205,7 +220,7 @@ export default function RadioPage() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 rounded-full bg-gold/80 flex items-center justify-center group-hover:bg-gold transition-all duration-300">
                         <svg className="w-7 h-7 text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
+                          <path d="M8 5v14l11-7z" />
                         </svg>
                       </div>
                     </div>

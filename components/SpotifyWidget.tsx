@@ -50,7 +50,7 @@ function SpotifyWidget() {
   }, [])
 
   return (
-    <div className="fixed top-6 right-6 z-50 hidden md:block">
+    <div className="fixed top-6 right-6 z-50  md:block">
       <div className="bg-surface/80 backdrop-blur-md border border-cream/10 rounded-lg p-3 max-w-[280px] shadow-2xl hover:border-gold/30 transition-all duration-300">
         <div className="flex items-center gap-3">
           {/* Album Art */}

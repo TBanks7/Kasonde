@@ -7,14 +7,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 type Section = 'galleries' | 'workshops' | 'drag'
 
 const galleryImages = [
-  { id: 1, url: '/Poker With Life.JPG', title: 'Poker With Life' },
-  { id: 2, url: '/I Hope what you did to me haunts you.JPG', title: 'I Hope what you did to me haunts you' },
-  { id: 3, url: '/Seeing in Black and White .JPG', title: 'Seeing in Black and White' },
-  { id: 4, url: '/The Destruction of Self .JPG', title: 'The Destruction of Self' },
-  { id: 5, url: '/Red.JPG', title: 'Red' },
-  // { id: 6, url: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=700&h=900&fit=crop', title: 'Movement' },
-  // { id: 7, url: 'https://images.unsplash.com/photo-1577083300597-dca35f07cc52?w=800&h=1000&fit=crop', title: 'Canvas Dreams' },
-  // { id: 8, url: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&h=800&fit=crop', title: 'Bold Strokes' },
+  { id: 1, url: '/Poker With Life.JPG', date: 'August 2020', style: 'Chalk on paper 33.1 x 46.8 in', title: 'Poker With Life', about: 'We get told that in life we get handed certain cards and it’s “what we do with them”. We are given life, but who hands the cards? Who’s hands control the cards? The game is rigged for majority of the minority and sometimes even when you think you are about to beat the dealer win the house - it goes up in flames. And you watch it fall into pieces and all you can do is smile. Poker with life becomes a reminder that there is nothing promised and only one thing that is sure.' },
+  { id: 2, url: '/I Hope what you did to me haunts you.JPG', date: 'October 2020', style: 'Mixed media 33.1 x 46.8 in', title: 'I Hope what you did to me haunts you', about: 'What happens when your world is plagued, conflicted and abused. What obligations do you have? Do you see that it is warped? That it is made. Do you stay stuck in a fictional land and a paused future? I hope what you did to me haunts you invites the viewer to reflect on what this phrase brings up for them, to explore whether they think of someone, something or some system. To asks themselves what haunts them.' },
+  { id: 3, url: '/Seeing in Black and White .JPG', date: 'February 2021', style: 'Mixed media 33.1 x 46.8 in', title: 'Seeing in Black and White', about: 'Every single thing influences, every single thing creates the whole. There’s black and there’s white all entangled, all relational. Seeing in black and white positions itself within relations to whiteness as a controlling and extractive concept that is essentially attached to being Black. It examines the ways in which ideas of Blackness can be shaped by white spaces and attachment to them. It evokes the uncomfort of those realizations by feeling incomplete, like a part is missing. That there is a part that must be rediscovered.' },
+  { id: 4, url: '/Deconstructed Self.JPG', date: 'June 2023', style: 'Mixed media 33.1 x 46.8 in', title: 'Deconstructed Self', about: 'The process of deconstruction is a continuation of the Black radical experience to liberate oneself not only physically but mentally too. It calls for an identification of who’s conversation is happening internally. The colonial project\'s aim is to capture one\'s thoughts, to erase experience and plague knowledge systems. Epistemic justice is a concern with fairness in knowledge making, practising and prioritising, its about whose thoughts get to matter. Deconstructed self is a document of decolonizing the idea of self and shifting/aligning to one that inspires to be an authentic, evolving entity that is actively created and nurtured through self-love, critical awareness, and resistance to oppresive, dominator culture.' },
+  { id: 5, url: '/Red.JPG', date: 'December 2025', style: 'Acrylic 20 x 20 in', title: 'Do you know what they say about Black bodies in the moonlight?', about: 'They glow' },
 ]
 
 const workshops = [
@@ -29,7 +26,7 @@ const workshops = [
   {
     id: 2,
     title: 'Paint it Black',
-    description: 'Join us for a day of collective creation! Explore your creative side and immerse yourself in community',
+    description: 'A workshop designed for co-creation, arts and crafts  in a closed Black space. This workshop was hosted in support of Community Race Relations Committee Peterborough, Trent Center for Gender and Social Justice, BLMNogo, TCSA, OPIRIG and Artspace ptbo.',
     location: 'Art Space, 378 Alymer St N, Peterborough',
     date: 'February 28, 2026',
     status: 'past',
@@ -37,10 +34,24 @@ const workshops = [
   {
     id: 3,
     title: 'EXPLOITATION OF IMMIGRANTS: A COUNTER PUBLIC CONVERSATION',
-    description: 'A panel discussion and workshop exploring the exploitation of immigrants.',
+    description: 'A series of workshops designed to counter public dominated discourse that centers topics important to marginalized groups that seeks to activate public spaces, critical dialogue and decolonise knowledge making to center oral tradition. The topic of this conversation explored the exploitation of immigrants in so called Canada. Opened by Mauricio Interiano and Dr Kate Norlock TPS Coffee House, Philosophy Department ',
     location: 'TPS Coffee House.',
     date: 'March 13, 2025',
     status: 'past',
+  },
+  { id: 4,
+    title: 'Gender Affirming  Care: A Counter Public Conversation',
+    description: 'A series of workshops designed to counter public dominated discourse that centers topics important to marginalized groups that seeks to activate public spaces, critical dialogue and decolonise knowledge making to center oral tradition. The topic of this conversation explored what gender affirming care is and how necessary free and low barrier access to services of gender affirming care remain. Opened by Dr.Byron Stoyles and Dr. Nicole Fice TPS Coffee House, Philosophy Department ',
+    location: 'TPS Coffee House.',
+    date: 'March 15, 2025',
+    status: 'upcoming',
+  },
+  { id: 5,
+    title: 'Intersections of Indigenous Sovereignty, Black Liberation, reparations and allyship: A Counter Public Conversation ',
+    description: 'A series of workshops designed to counter public dominated discourse that centers topics important to marginalized groups that seeks to activate public spaces, critical dialogue and decolonise knowledge making to center oral tradition. The topic of this conversation explored Intersections of Indigenous Sovereignty, Black Liberation, reparations and allyship. This exposed the interstices  of oppression that are connected under racial capitalism that calls for repair and reimaging. Opened by Mshkiki Gitigaan Kwe TPS Coffee House, Philosophy Department ',
+    location: 'TPS Coffee House.',
+    date: 'March 17, 2025',
+    status: 'upcoming',
   },
 ]
 
@@ -53,7 +64,7 @@ const dragImages = [
 
 export default function ArtPage() {
   const [activeSection, setActiveSection] = useState<Section>('galleries')
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [lightboxImage, setLightboxImage] = useState<typeof galleryImages[0] | null>(null)
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-6">
@@ -67,24 +78,22 @@ export default function ArtPage() {
         <h1 className="font-serif text-7xl lg:text-9xl font-bold text-cream mb-6">
           Art
         </h1>
-        <p className="text-cream/60 text-lg max-w-2xl">
-          Visual expression through painting, performance, and transformation. 
-          Galleries, workshops, and drag artistry.
+        <p className="text-cream/60 text-lg max-w-4xl">
+          I explore Black radical existentialism through visual storytelling, positioning myself as the subject, object, and verb of the work. I examine my position as a multiple and evolving being, using absurdity and self-obsession. This practice becomes a vehicle through which I document experience as a cycle of descent, introspection, and transcendence.
         </p>
       </motion.div>
 
       {/* Section Tabs */}
       <div className="max-w-7xl mx-auto mb-12">
         <div className="flex gap-6 border-b border-cream/10">
-          {(['galleries', 'workshops', 'drag'] as Section[]).map((section) => (
+          {(['galleries', 'drag'] as Section[]).map((section) => (
             <button
               key={section}
               onClick={() => setActiveSection(section)}
-              className={`pb-4 text-lg font-medium capitalize transition-all duration-300 relative ${
-                activeSection === section
+              className={`pb-4 text-lg font-medium capitalize transition-all duration-300 relative ${activeSection === section
                   ? 'text-gold'
                   : 'text-cream/50 hover:text-cream/80'
-              }`}
+                }`}
             >
               {section}
               {activeSection === section && (
@@ -122,7 +131,7 @@ export default function ArtPage() {
                 >
                   <div
                     className="relative overflow-hidden rounded-lg cursor-pointer group"
-                    onClick={() => setLightboxImage(image.url)}
+                    onClick={() => setLightboxImage(image)}
                   >
                     <Image
                       src={image.url}
@@ -142,7 +151,7 @@ export default function ArtPage() {
           </motion.div>
         )}
 
-        {activeSection === 'workshops' && (
+        {/* {activeSection === 'workshops' && (
           <motion.div
             key="workshops"
             initial={{ opacity: 0, y: 20 }}
@@ -164,15 +173,14 @@ export default function ArtPage() {
                     <h3 className="font-serif text-2xl text-cream font-bold">
                       {workshop.title}
                     </h3>
-                    <span className={`text-sm px-3 py-1 rounded-full ${
-                      workshop.status === 'upcoming'
+                    <span className={`text-sm px-3 py-1 rounded-full ${workshop.status === 'upcoming'
                         ? 'bg-gold/20 text-gold'
                         : 'bg-cream/10 text-cream/50'
-                    }`}>
+                      }`}>
                       {workshop.status === 'upcoming' ? 'Upcoming' : 'Past'}
                     </span>
                   </div>
-                  <p className="text-cream/70 mb-4">{workshop.description}</p>
+                  <p className="text-cream/70 mb-4 text-justify">{workshop.description}</p>
                   <p className="text-cream/50 text-sm mb-6">{workshop.location}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-cream/50 text-sm">{workshop.date}</span>
@@ -186,7 +194,7 @@ export default function ArtPage() {
               ))}
             </div>
           </motion.div>
-        )}
+        )} */}
 
         {activeSection === 'drag' && (
           <motion.div
@@ -224,36 +232,70 @@ export default function ArtPage() {
         )}
       </AnimatePresence>
 
-      {/* Lightbox */}
+
+      {/* Lightbox Modal */}
       <AnimatePresence>
         {lightboxImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-6"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
             onClick={() => setLightboxImage(null)}
           >
-            <button
-              className="absolute top-6 right-6 w-12 h-12 rounded-full bg-surface/80 border border-cream/20 flex items-center justify-center hover:border-gold transition-colors"
-              onClick={() => setLightboxImage(null)}
-            >
-              <svg className="w-6 h-6 text-cream" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-background/90 backdrop-blur-md" />
+
+            {/* Modal */}
             <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              className="relative max-w-5xl max-h-[90vh]"
+              initial={{ opacity: 0, scale: 0.95, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 16 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+              className="relative z-10 w-full max-w-5xl max-h-[90vh] flex flex-col items-center md:flex-row overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <Image
-                src={lightboxImage}
-                alt="Gallery image"
-                width={1600}
-                height={1200}
-                className="w-auto h-auto max-w-full max-h-[90vh] object-contain"
-              />
+              {/* Close Button */}
+              <button
+                className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-background/60 border border-cream/20 flex items-center justify-center hover:border-gold hover:text-gold text-cream transition-colors"
+                onClick={() => setLightboxImage(null)}
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Image Side */}
+              <div className="md:w-1/2 flex items-center justify-center overflow-hidden">
+                <Image
+                  src={lightboxImage.url}
+                  alt={lightboxImage.title}
+                  width={1600}
+                  height={1200}
+                  className="w-full h-full object-contain max-h-[50vh] md:max-h-[90vh]"
+                />
+              </div>
+
+              {/* Info Side */}
+              <div className="md:w-1/2 flex flex-col justify-between items-center p-8 overflow-y-auto max-h-[40vh] md:max-h-[90vh]">
+                <div>
+                  <p className="text-gold text-xs uppercase tracking-widest mb-3 font-medium">
+                    {lightboxImage.date} · {lightboxImage.style}
+                  </p>
+                  <h2 className="font-serif text-3xl text-cream font-bold mb-6 leading-snug">
+                    {lightboxImage.title}
+                  </h2>
+                  <p className="text-cream/70 text-base text-justify leading-relaxed">
+                    {lightboxImage.about}
+                  </p>
+                </div>
+
+                {/* Optional: navigation hint */}
+                <button className="inline-block text-cream/30 text-xs mt-8 md:hidden" onClick={() => setLightboxImage(null)}>
+                  Click to close
+                </button>
+              </div>
             </motion.div>
           </motion.div>
         )}
