@@ -4,9 +4,9 @@ import SpotifyWidget from '@/components/SpotifyWidget'
 import BackToHome from '@/components/BackToHome'
 
 export const metadata: Metadata = {
-  title: 'Kasonde — Artist, Writer, Broadcaster',
+  title: 'Kasonde — Artist, Philosopher, Storyteller',
   description: 'Multidisciplinary creative exploring art, writing, and broadcasting. Galleries, essays, radio shows, and more.',
-  keywords: 'artist, writer, broadcaster, creative, galleries, essays, radio, vlogs',
+  keywords: 'artist, writer, broadcaster, philosopher, storyteller, creative, galleries, essays, radio, vlogs',
 }
 
 export default function RootLayout({

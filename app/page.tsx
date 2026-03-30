@@ -129,71 +129,81 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
 }
 
 export default function Home() {
+  const [isFlipped, setIsFlipped] = useState(false)
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row-reverse">
       
       <SpotifyWidget />
       {/* LEFT HALF - Photo & Info */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="lg:w-1/2 relative h-[70vh] lg:h-screen lg:sticky lg:top-0"
-      >
-        {/* Photo */}
-        <div className="absolute inset-0">
-          <Image
-            src="/kas.webp"
-            alt="Kasonde"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+      <div className="lg:w-1/2 relative h-[70vh] lg:h-screen lg:sticky lg:top-0 perspective-1500">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, rotateY: isFlipped ? 180 : 0 }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
+          onClick={() => setIsFlipped((prev) => !prev)}
+          className="w-full h-full relative cursor-pointer"
+          style={{ transformStyle: 'preserve-3d' }}
+        >
+          {/* Front Face */}
+          <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}>
+            <div className="absolute inset-0">
+              <Image
+                src="/kas.webp"
+                alt="Kasonde"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
-        {/* Text Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="font-serif text-6xl lg:text-8xl font-bold text-cream mb-4 tracking-wide"
-          >
-            Kasonde Mutale
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="text-gold tracking-[0.3em] uppercase text-sm mb-6"
-          >
-            Artist · Philosopher  · Storyteller 
-          </motion.p>
+            <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
+              <motion.h1 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="font-serif text-6xl lg:text-8xl font-bold text-cream mb-4 tracking-wide"
+              >
+                Kasonde Mutale
+              </motion.h1>
+              
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="text-gold tracking-[0.3em] uppercase text-sm mb-6"
+              >
+                Artist · Philosopher  · Storyteller 
+              </motion.p>
 
-            <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-cream/70 text-base max-w-md leading-relaxed space-y-4"
-            >
-            {/*<p>Kasonde Mutale is a Bemba artist, philosopher and storyteller from Zambia. A multidisciplinary artist working across audio, visual, and performance art, her practice is grounded in Black radical existentialism. Her work unfolds through visual storytelling, embodied performance, and philosophical inquiry, asking what it means to live, refuse, and become in the wake of Black negation.</p>
-            
-             <p>Resisting erasure, Mutale insists on presence, memory, and radical possibility, using palettes, whimsical distortions, and meticulous detail to explore the tensions of Black existence, self-fashioning, survival, and joy. She holds an Honours degree in Philosophy and draws from Black existential and feminist thinkers such as bell hooks, Frantz Fanon, and other radical theorists to inform both her conceptual frameworks and aesthetic choices. Her primary visual mediums include oil and acrylic painting, mixed-media collage, pen, and pencil.</p>
-            
-            <p>Her storytelling includes hosting the radio show I Like To Think, an ongoing platform for collective and personal reflection spanning social, political, and intimate terrains. Through laughing, listening, and critique, she explores what it means to exist, extending an ubuntu-influenced lens that recognizes the self through others. She invites friends and community to think and share alongside her.</p>
-            
-            <p>In performance, she explores identity through drag, curating the persona PuSsay—a destabilizing figure that disrupts gender norms while honoring Black digital creators who shaped her imagination. As a community engagement specialist, Mutale is committed to collective practice and facilitates community workshops centred on shared making, anti-consumerist values, and art as trade, dialogue, and connection.</p>
-            
-            <p>Loyal to being "a jack of all trades," she offers everything from service, research, and transformational development to volunteering, consulting, programming, and creative vision. A small universe with many suns.</p>
-            
-            <p>Hi friend..</p> */}
-            </motion.p>
-        </div>
-      </motion.div>
+              {/* <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7 }}
+                className="text-cream/70 text-base max-w-md leading-relaxed"
+              >
+                Tap to flip and read more.
+              </motion.p> */}
+            </div>
+          </div>
+
+          {/* Back Face */}
+          <div className="absolute inset-0 rounded-none bg-background/95 p-6 overflow-auto" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+            <div className="h-fit w-full flex flex-col justify-center">
+              <h2 className="text-3xl font-bold text-cream mb-4">About Kasonde</h2>
+              <p className="text-cream/80 mb-3">Kasonde Mutale is a Bemba artist, philosopher and storyteller from Zambia. A multidisciplinary artist working across audio, visual, and performance art, her practice is grounded in Black radical existentialism. Her work unfolds through visual storytelling, embodied performance, and philosophical inquiry, asking what it means to live, refuse, and become in the wake of Black negation.</p>
+              <p className="text-cream/80 mb-3">Resisting erasure, Mutale insists on presence, memory, and radical possibility, using palettes, whimsical distortions, and meticulous detail to explore the tensions of Black existence, self-fashioning, survival, and joy. She holds an Honours degree in Philosophy and draws from Black existential and feminist thinkers such as bell hooks, Frantz Fanon, and other radical theorists to inform both her conceptual frameworks and aesthetic choices. Her primary visual mediums include oil and acrylic painting, mixed-media collage, pen, and pencil.</p>
+              <p className="text-cream/80 mb-3">Her storytelling includes hosting the radio show I Like To Think, an ongoing platform for collective and personal reflection spanning social, political, and intimate terrains. Through laughing, listening, and critique, she explores what it means to exist, extending an ubuntu-influenced lens that recognizes the self through others. She invites friends and community to think and share alongside her.</p>
+              <p className="text-cream/80 mb-3">In performance, she explores identity through drag, curating the persona PuSsay—a destabilizing figure that disrupts gender norms while honoring Black digital creators who shaped her imagination. As a community engagement specialist, Mutale is committed to collective practice and facilitates community workshops centred on shared making, anti-consumerist values, and art as trade, dialogue, and connection.</p>
+              <p className="text-cream/80">Loyal to being "a jack of all trades," she offers everything from service, research, and transformational development to volunteering, consulting, programming, and creative vision. A small universe with many suns.</p>
+            </div>
+          </div>
+
+          <div style={{ backfaceVisibility: 'hidden' }} />
+        </motion.div>
+      </div>
 
       {/* RIGHT HALF - Tile Grid */}
       <div className="lg:w-1/2 p-6 lg:p-12 flex items-center">

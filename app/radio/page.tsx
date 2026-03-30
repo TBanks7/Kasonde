@@ -12,6 +12,7 @@ const audioEpisodes = [
     description: 'A conversation about the small victories in the creative process and how they fuel our passion and perseverance.',
     duration: '18:26',
     audioUrl: '/audio/All the Winss.mp3',
+    posterUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop',
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const audioEpisodes = [
     description: 'Today, we’re diving deep into a topic that’s both fascinating and complex: the influence of celebrities in our lives. Why do we find ourselves so captivated by these figures who are, in many ways, famous for simply being famous? What does our admiration say about our values and desires?',
     duration: '30:16',
     audioUrl: '/audio/Celebrities.mp3',
+    posterUrl: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=450&fit=crop',
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const audioEpisodes = [
     description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
     duration: '28:04',
     audioUrl: '/audio/ILiketoThinkwithTapspt1.mp3',
+    posterUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=450&fit=crop',
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const audioEpisodes = [
     description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
     duration: '30:24',
     audioUrl: '/audio/ILike2ThinkwithTapspt2.mp3',
+    posterUrl: 'https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?w=800&h=450&fit=crop',
   },
 ]
 
@@ -118,73 +122,104 @@ export default function RadioPage() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="max-w-5xl mx-auto"
+            className="max-w-6xl mx-auto"
           >
-            <div className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
               {audioEpisodes.map((episode, index) => (
                 <motion.div
                   key={episode.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-surface/50 border border-cream/10 rounded-lg p-6 hover:border-gold/30 transition-all duration-300"
+                  className="group relative overflow-hidden rounded-lg bg-surface/50 border border-cream/10 hover:border-gold/30 transition-all duration-300"
                 >
-                  <div className="flex items-start gap-6">
-                    {/* Play Button */}
+                  {/* Poster Image */}
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <img
+                      src={episode.posterUrl}
+                      alt={episode.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Dark overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+
+                    {/* Play Button Overlay */}
                     <button
                       onClick={() => {
                         if (playingId === episode.id) {
-                          // Pause current episode
                           audioRef.current?.pause();
                           setPlayingId(null);
                         } else {
-                          // Switch to new episode
                           setPlayingId(episode.id);
                         }
                       }}
-                      className="flex-shrink-0 w-16 h-16 rounded-full bg-gold/20 border border-gold flex items-center justify-center hover:bg-gold hover:border-gold transition-all duration-300 group"
+                      className="absolute inset-0 flex items-center justify-center group/play"
                     >
-                      {playingId === episode.id ? (
-                        <svg className="w-6 h-6 text-gold group-hover:text-background" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-                        </svg>
-                      ) : (
-                        <svg className="w-6 h-6 text-gold group-hover:text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      )}
+                      <div className="w-20 h-20 rounded-full bg-gold/90 backdrop-blur-sm flex items-center justify-center group-hover/play:bg-gold group-hover/play:scale-110 transition-all duration-300">
+                        {playingId === episode.id ? (
+                          <svg className="w-8 h-8 text-background" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                          </svg>
+                        ) : (
+                          <svg className="w-8 h-8 text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        )}
+                      </div>
                     </button>
 
-                    {/* Episode Info */}
-                    <div className="flex-1">
-                      <h3 className="font-serif text-2xl text-cream font-bold mb-2">
-                        {episode.title}
-                      </h3>
-                      <p className="text-cream/60 mb-4">{episode.description}</p>
-                      <span className="text-cream/40 text-sm">{episode.duration}</span>
+                    {/* Duration Badge */}
+                    <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm px-3 py-1 rounded-full">
+                      <span className="text-cream text-sm font-medium">{episode.duration}</span>
                     </div>
+
+                    {/* Playing Indicator */}
+                    {playingId === episode.id && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="absolute top-4 left-4 flex items-center gap-2 bg-gold/90 backdrop-blur-sm px-3 py-1 rounded-full"
+                      >
+                        <div className="flex items-center gap-0.5">
+                          <div className="w-0.5 bg-background equalizer-bar rounded-full"></div>
+                          <div className="w-0.5 bg-background equalizer-bar rounded-full"></div>
+                          <div className="w-0.5 bg-background equalizer-bar rounded-full"></div>
+                        </div>
+                        <span className="text-background text-xs font-semibold uppercase tracking-wide">Playing</span>
+                      </motion.div>
+                    )}
                   </div>
 
-                  {/* Audio Player (when playing) */}
-                  {playingId === episode.id && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-6 pt-6 border-t border-cream/10"
-                    >
-                      <audio
-                        ref={audioRef}
-                        controls
-                        autoPlay                              // ✅ auto-plays when mounted
-                        className="w-full"
-                        onEnded={() => setPlayingId(null)}    // ✅ resets state when audio ends
+                  {/* Episode Info */}
+                  <div className="p-6">
+                    <h3 className="font-serif text-2xl text-cream font-bold mb-2 group-hover:text-gold transition-colors">
+                      {episode.title}
+                    </h3>
+                    <p className="text-cream/60 text-sm leading-relaxed mb-4">
+                      {episode.description}
+                    </p>
+
+                    {/* Audio Player (when playing) */}
+                    {playingId === episode.id && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="mt-4 pt-4 border-t border-cream/10"
                       >
-                        <source src={episode.audioUrl} type="audio/mpeg" />
-                        Your browser does not support the audio element.
-                      </audio>
-                    </motion.div>
-                  )}
+                        <audio
+                          ref={audioRef}
+                          controls
+                          autoPlay
+                          className="w-full"
+                          onEnded={() => setPlayingId(null)}
+                        >
+                          <source src={episode.audioUrl} type="audio/mpeg" />
+                          Your browser does not support the audio element.
+                        </audio>
+                      </motion.div>
+                    )}
+                  </div>
                 </motion.div>
               ))}
             </div>
