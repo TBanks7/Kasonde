@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-type Section = 'audio' | 'video'
 
 const audioEpisodes = [
   {
@@ -40,32 +39,9 @@ const audioEpisodes = [
   },
 ]
 
-const videoEpisodes = [
-  {
-    id: 1,
-    title: 'Studio Sessions: Abstract Process',
-    thumbnail: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=450&fit=crop',
-    duration: '15:42',
-    youtubeId: 'dQw4w9WgXcQ',
-  },
-  {
-    id: 2,
-    title: 'Gallery Walk: New Perspectives',
-    thumbnail: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?w=800&h=450&fit=crop',
-    duration: '22:18',
-    youtubeId: 'dQw4w9WgXcQ',
-  },
-  {
-    id: 3,
-    title: 'In Conversation: Art & Activism',
-    thumbnail: 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?w=800&h=450&fit=crop',
-    duration: '34:55',
-    youtubeId: 'dQw4w9WgXcQ',
-  },
-]
+
 
 export default function RadioPage() {
-  const [activeSection, setActiveSection] = useState<Section>('audio')
   const [playingId, setPlayingId] = useState<number | null>(null)
   const [videoModal, setVideoModal] = useState<string | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -88,34 +64,10 @@ export default function RadioPage() {
         </p>
       </motion.div>
 
-      {/* Section Tabs */}
-      <div className="max-w-5xl mx-auto mb-12">
-        <div className="flex gap-6 border-b border-cream/10">
-          {(['audio', 'video'] as Section[]).map((section) => (
-            <button
-              key={section}
-              onClick={() => setActiveSection(section)}
-              className={`pb-4 text-lg font-medium capitalize transition-all duration-300 relative ${activeSection === section
-                ? 'text-gold'
-                : 'text-cream/50 hover:text-cream/80'
-                }`}
-            >
-              {section}
-              {activeSection === section && (
-                <motion.div
-                  layoutId="radioTab"
-                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-gold"
-                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {/* Content Sections */}
       <AnimatePresence mode="wait">
-        {activeSection === 'audio' && (
+
           <motion.div
             key="audio"
             initial={{ opacity: 0, y: 20 }}
@@ -224,53 +176,8 @@ export default function RadioPage() {
               ))}
             </div>
           </motion.div>
-        )}
 
-        {activeSection === 'video' && (
-          <motion.div
-            key="video"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-6xl mx-auto"
-          >
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videoEpisodes.map((video, index) => (
-                <motion.div
-                  key={video.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group cursor-pointer"
-                  onClick={() => setVideoModal(video.youtubeId)}
-                >
-                  <div className="relative aspect-video rounded-lg overflow-hidden mb-4">
-                    <img
-                      src={video.thumbnail}
-                      alt={video.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-background/40 group-hover:bg-primary/40 transition-all duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 rounded-full bg-gold/80 flex items-center justify-center group-hover:bg-gold transition-all duration-300">
-                        <svg className="w-7 h-7 text-background ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div className="absolute bottom-3 right-3 bg-background/80 px-2 py-1 rounded text-xs text-cream">
-                      {video.duration}
-                    </div>
-                  </div>
-                  <h3 className="font-serif text-xl text-cream font-bold group-hover:text-gold transition-colors">
-                    {video.title}
-                  </h3>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
+
       </AnimatePresence>
 
       {/* Video Modal */}

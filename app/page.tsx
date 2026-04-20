@@ -62,7 +62,7 @@ const tiles: Tile[] = [
     subtitle: 'Find me everywhere',
     href: '/socials',
     image: '/socials.webp',
-    size: 'col-span-2 sm:col-span-1 lg:col-span-2 row-span-1',
+    size: 'col-span-1 sm:col-span-1 lg:col-span-1 row-span-1',
   },
   {
     id: 'contact',
@@ -70,7 +70,7 @@ const tiles: Tile[] = [
     subtitle: 'Say hello',
     href: '/contact',
     image: '/contact.webp',
-    size: 'col-span-1 row-span-1',
+    size: 'col-span-1 row-span-1 sm:col-span-2 row-span-1 lg:col-span-1 row-span-1', // Full width on sm, normal on lg
   },
 ]
 
@@ -134,9 +134,9 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col lg:flex-row-reverse">
       
-      <SpotifyWidget />
+      {/* <SpotifyWidget /> */}
       {/* LEFT HALF - Photo & Info */}
-      <div className="lg:w-1/2 relative h-[70vh] lg:h-screen lg:sticky lg:top-0 perspective-1500">
+      <div className="lg:w-1/2 relative h-[90vh] lg:h-screen lg:sticky lg:top-0 perspective-1500">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, rotateY: isFlipped ? 180 : 0 }}
