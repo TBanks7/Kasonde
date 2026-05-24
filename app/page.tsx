@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import SpotifyWidget from '@/components/SpotifyWidget'
 
 interface Tile {
@@ -74,6 +74,20 @@ const tiles: Tile[] = [
   },
 ]
 
+const images = [
+  { src: "/hero/kas.webp", alt: "Kasonde" },
+  { src: "/hero/kas1.webp", alt: "Kasonde" },
+  { src: "/hero/kas2.webp", alt: "Kasonde" },
+  { src: "/hero/kas3.webp", alt: "Kasonde" },
+  { src: "/hero/kas4.webp", alt: "Kasonde" },
+  { src: "/hero/kas5.webp", alt: "Kasonde" },
+  { src: "/hero/kas6.webp", alt: "Kasonde" },
+  { src: "/hero/kas7.webp", alt: "Kasonde" },
+  { src: "/hero/kas8.webp", alt: "Kasonde" },
+  { src: "/hero/kas9.webp", alt: "Kasonde" },
+  { src: "/hero/kas10.webp", alt: "Kasonde" },
+];
+
 function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -103,7 +117,7 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
         </div>
 
         {/* Dark Overlay */}
-        <div 
+        <div
           className="absolute inset-0 bg-background/60 transition-all duration-500"
           style={{
             backgroundColor: isHovered ? 'rgba(79, 112, 255, 0.3)' : 'rgba(10, 14, 26, 0.6)',
@@ -114,7 +128,7 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
         <div className="absolute inset-0 p-6 flex flex-col justify-end">
           <h3 className="font-serif text-3xl md:text-4xl font-bold text-cream mb-2 relative inline-block">
             {tile.title}
-            <span 
+            <span
               className="absolute bottom-0 left-0 h-0.5 bg-gold transition-all duration-500"
               style={{ width: isHovered ? '100%' : '0%' }}
             />
@@ -131,9 +145,18 @@ function NavigationTile({ tile, index }: { tile: Tile; index: number }) {
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false)
 
+    const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row-reverse">
-      
+
       {/* <SpotifyWidget /> */}
       {/* LEFT HALF - Photo & Info */}
       <div className="lg:w-1/2 relative h-[90vh] lg:h-screen lg:sticky lg:top-0 perspective-1500">
@@ -148,19 +171,27 @@ export default function Home() {
           {/* Front Face */}
           <div className="absolute inset-0" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(0deg)' }}>
             <div className="absolute inset-0">
-              <Image
-                src="/kas.webp"
-                alt="Kasonde"
-                fill
-                className="object-cover"
-                priority
-              />
+              {images.map((img, i) => (
+                <div
+                  key={img.src}
+                  className="absolute inset-0 transition-opacity duration-[1200ms] ease-in-out"
+                  style={{ opacity: i === current ? 1 : 0 }}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    className="object-cover"
+                    priority={i === 0}
+                  />
+                </div>
+              ))}
             </div>
 
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
 
             <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-12">
-              <motion.h1 
+              <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -168,14 +199,14 @@ export default function Home() {
               >
                 Kasonde Mutale
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
                 className="text-gold tracking-[0.3em] uppercase text-sm mb-6"
               >
-                Artist · Philosopher  · Storyteller 
+                Artist · Philosopher  · Storyteller
               </motion.p>
 
               {/* <motion.p 

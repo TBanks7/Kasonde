@@ -11,7 +11,7 @@ const audioEpisodes = [
     description: 'A conversation about the small victories in the creative process and how they fuel our passion and perseverance.',
     duration: '18:26',
     audioUrl: '/audio/All the Winss.mp3',
-    posterUrl: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=450&fit=crop',
+    posterUrl: '/All the wins.webp',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const audioEpisodes = [
     description: 'Today, we’re diving deep into a topic that’s both fascinating and complex: the influence of celebrities in our lives. Why do we find ourselves so captivated by these figures who are, in many ways, famous for simply being famous? What does our admiration say about our values and desires?',
     duration: '30:16',
     audioUrl: '/audio/Celebrities.mp3',
-    posterUrl: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&h=450&fit=crop',
+    posterUrl: '/Celebrities.webp',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const audioEpisodes = [
     description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
     duration: '28:04',
     audioUrl: '/audio/ILiketoThinkwithTapspt1.mp3',
-    posterUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=450&fit=crop',
+    posterUrl: '/Tapchin.webp',
   },
   {
     id: 4,
@@ -35,8 +35,24 @@ const audioEpisodes = [
     description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
     duration: '30:24',
     audioUrl: '/audio/ILike2ThinkwithTapspt2.mp3',
-    posterUrl: 'https://images.unsplash.com/photo-1491895200222-0fc4a4c35e18?w=800&h=450&fit=crop',
+    posterUrl: '/Tapchin.webp',
   },
+  {
+    id: 5,
+    title: 'I Like To Think with Audrey',
+    description: 'I like to think with my friend Audrey Gwiza. Audrey is a speaker, writer, and youth advocate. On this episode we reflect on digital consumerism and asking, is there pressure to perform for this machine we call the algorithm?  We talk about everything from monetizing your gift, to whether that sacrifice is worth it and at what point you do recognize that gift. Come sit with us and think all these big questions through. A fan favourite episode, enjoy folks.',
+    duration: '25:42',
+    audioUrl: '/audio/ILiketoThinkwithAudrey.mp3',
+    posterUrl: '/Audrey.webp',
+  },
+  {
+    id: 6,
+    title: 'I Like To Think with Patricia & Amal',
+    description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
+    duration: '28:04',
+    audioUrl: '/audio/I like to think with Kasonde - Patricia & Amal - Jeff Leal.mp3',
+    posterUrl: '/Amal.webp',
+  }
 ]
 
 
@@ -86,7 +102,7 @@ export default function RadioPage() {
                   className="group relative overflow-hidden rounded-lg bg-surface/50 border border-cream/10 hover:border-gold/30 transition-all duration-300"
                 >
                   {/* Poster Image */}
-                  <div className="relative aspect-[16/9] overflow-hidden">
+                  <div className="relative aspect-square overflow-hidden">
                     <img
                       src={episode.posterUrl}
                       alt={episode.title}
