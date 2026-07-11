@@ -14,7 +14,7 @@ interface MediumItem {
 
 export async function GET(req: NextRequest) {
     try {
-        const res = await fetch('https://medium.com/feed/@tbanks20011')
+        const res = await fetch('https://medium.com/feed/kasonde.mutale')
         if (!res.ok) {
             return NextResponse.json({ error: 'Failed to fetch Medium feed' }, { status: 502 })
         }

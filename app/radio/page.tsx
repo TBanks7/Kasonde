@@ -48,10 +48,18 @@ const audioEpisodes = [
   {
     id: 6,
     title: 'I Like To Think with Patricia & Amal',
-    description: 'How performance artists are using their bodies as sites of resistance and reclamation.',
+    description: '',
     duration: '28:04',
     audioUrl: '/audio/I like to think with Kasonde - Patricia & Amal - Jeff Leal.mp3',
-    posterUrl: '/Amal.webp',
+    posterUrl: '/Celebrities.webp',
+  },
+  {
+    id: 7,
+    title: 'I Like To Think with Sunny Malik',
+    description: '',
+    duration: '30:24',
+    audioUrl: '/audio/I like to think with Kasonde - Sunny Malik.mp3',
+    posterUrl: '/Sunny.webp',
   }
 ]
 

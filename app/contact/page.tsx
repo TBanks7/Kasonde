@@ -16,14 +16,41 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitStatus('idle')
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500))
-    
-    console.log('Form submitted:', formData)
-    setSubmitStatus('success')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setIsSubmitting(false)
+    try {
+      // FormSubmit AJAX endpoint - replace the email below with the site owner's address.
+      // Note: the FIRST submission to a new FormSubmit address requires a one-time
+      // confirmation click sent to that inbox before subsequent messages go through.
+      const response = await fetch('https://formsubmit.co/ajax/kasonde.mutale@hotmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          _subject: `New message from ${formData.name}: ${formData.subject}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('FormSubmit request failed')
+      }
+
+      setSubmitStatus('success')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -169,10 +196,10 @@ export default function ContactPage() {
             Or email directly
           </p>
           <a
-            href="mailto:hello@kasonde.com"
+            href="mailto:kasonde.mutale@hotmail.com"
             className="text-gold hover:text-gold/80 font-serif text-2xl transition-colors duration-300"
           >
-            hello@kasonde.com
+            kasonde.mutale@hotmail.com
           </a>
         </motion.div>
       </div>
