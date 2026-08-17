@@ -71,42 +71,63 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 ```
 kasonde/
 ├── app/
-│   ├── art/                 # Art page with sections
-│   ├── essays/              # Essays listing + detail pages
-│   ├── radio/               # Audio & video content
-│   ├── vlogs/               # Lifestyle video grid
-│   ├── events/              # Upcoming & past events
-│   ├── socials/             # Social media links
-│   ├── contact/             # Contact form
-│   ├── layout.tsx           # Root layout
-│   ├── page.tsx             # Homepage
-│   └── globals.css          # Global styles
+│   ├── (frontend)/          # The public site
+│   │   ├── art/              # Art page with sections
+│   │   ├── essays/           # Essays listing + detail pages
+│   │   ├── radio/             # Audio & video content
+│   │   ├── vlogs/             # Lifestyle video grid
+│   │   ├── events/            # Upcoming & past events
+│   │   ├── socials/           # Social media links
+│   │   ├── contact/           # Contact form
+│   │   ├── layout.tsx         # Root layout
+│   │   ├── page.tsx           # Homepage
+│   │   └── globals.css        # Global styles
+│   ├── (payload)/            # Payload CMS admin panel + REST API (/admin, /payload-api)
+│   └── api/                  # Spotify + Medium feed routes (unrelated to Payload)
+├── payload/
+│   ├── collections/          # CMS content models (art, radio-episodes, vlogs, events, essays, instagram-posts, media)
+│   ├── globals/               # CMS singletons (homepage, site-settings)
+│   └── seed/                  # One-time migration script
+├── payload.config.ts         # Payload CMS configuration
 ├── components/
 │   ├── SpotifyWidget.tsx    # Now Playing widget
 │   └── BackToHome.tsx       # Navigation element
-└── public/                  # Static assets
+└── public/                  # Static assets not managed by the CMS
+```
+
+## ✏️ Editing Content (Payload CMS)
+
+Almost everything on the site — art pieces, radio episodes, vlogs, events, essays (the static/PDF ones; Medium "Think Pieces" are pulled live from the Medium RSS feed and aren't edited here), the "Latest on Instagram" grid, homepage hero photos/bio, and the contact email/social links — is managed through a Payload CMS admin panel, not hardcoded in the source anymore.
+
+1. Go to `https://your-domain.com/admin` (or `http://localhost:3000/admin` locally) and log in.
+2. Pick a collection or global from the sidebar (e.g. "Radio Episodes", "Homepage") and edit/add/reorder entries.
+3. Changes appear on the live site within about a minute (pages revalidate every 60 seconds).
+
+No code changes or redeploys are needed for routine content updates. The homepage navigation tile grid (the 7 large tiles linking to each section) is the one exception — that stays in code since it's site structure, not content.
+
+### Required environment variables
+
+```env
+PAYLOAD_SECRET=       # any long random string
+DATABASE_URI=         # Postgres connection string (e.g. from Neon)
+BLOB_READ_WRITE_TOKEN=# Vercel Blob storage token
 ```
 
 ## 🎵 Spotify Integration
 
-The Spotify "Now Playing" widget is ready to connect to the Spotify Web API.
+The Spotify "Now Playing" widget pulls from `app/api/spotify/now-playing/route.ts`, which refreshes an access token on each request using a stored refresh token.
 
 ### Setup Instructions
 
 1. **Create a Spotify App**
    - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-   - Create a new app
+   - Create a new app, and set its Redirect URI to `http://127.0.0.1:3000/api/spotify/callback` (or your deployed domain's equivalent)
    - Note your Client ID and Client Secret
 
-2. **Get Access Token**
-   - Use the [Spotify Authorization Guide](https://developer.spotify.com/documentation/web-api/tutorials/getting-started)
-   - Request the `user-read-recently-played` scope
-
-3. **Update the Widget**
-   - Open `components/SpotifyWidget.tsx`
-   - Find the commented API call around line 24
-   - Replace `YOUR_ACCESS_TOKEN_HERE` with your token
-   - Uncomment the fetch code
+2. **Authorize once to get a refresh token**
+   - Set `CLIENT_ID` and `CLIENT_SECRET` in `.env`
+   - Visit `/api/spotify/login`, approve access, and it will redirect to `/api/spotify/callback`, which logs a `refresh_token` to the server console
+   - Copy that value into `.env` as `REFRESH_TOKEN`
 
 The widget shows:
 - Album art thumbnail
@@ -127,12 +148,7 @@ All images use Unsplash placeholders. Replace with your own:
 
 ### Update Content
 
-Content is hardcoded in each page component:
-
-- **Homepage tiles**: `app/page.tsx` — Update `tiles` array
-- **Gallery images**: `app/art/page.tsx` — Update `galleryImages` array
-- **Essays**: `app/essays/page.tsx` — Update `essays` array
-- **Events**: `app/events/page.tsx` — Update `upcomingEvents` and `pastEvents`
+See "Editing Content (Payload CMS)" above — content is managed at `/admin`, not in the page components. The homepage tile grid (`app/(frontend)/HomePageClient.tsx` — the `tiles` array) is the only piece still edited in code.
 
 ### Modify Colors
 
@@ -174,11 +190,12 @@ Reduce motion preferences are respected via CSS `prefers-reduced-motion`.
 ## 🔧 Technical Details
 
 ### Built With
-- **Next.js 14** — App Router
+- **Next.js 15** — App Router
+- **Payload CMS 3** — Content management (embedded in this app, under `app/(payload)`)
 - **TypeScript** — Type safety
 - **Tailwind CSS** — Utility-first styling
 - **Framer Motion** — Animations
-- **React** — UI framework
+- **React 19** — UI framework
 
 ### Browser Support
 - Chrome (latest)
@@ -210,18 +227,21 @@ Reduce motion preferences are respected via CSS `prefers-reduced-motion`.
 
 ### Environment Variables
 
-If using Spotify API or contact form backend:
-
 ```env
-SPOTIFY_ACCESS_TOKEN=your_token_here
-CONTACT_FORM_ENDPOINT=your_endpoint_here
+# Spotify "Now Playing" widget
+CLIENT_ID=
+CLIENT_SECRET=
+REFRESH_TOKEN=
+
+# Payload CMS
+PAYLOAD_SECRET=
+DATABASE_URI=
+BLOB_READ_WRITE_TOKEN=
 ```
 
 ## 📝 To-Do / Future Enhancements
 
-- [ ] Connect Spotify API for real "Now Playing" data
-- [ ] Add CMS integration (Sanity/Contentful) for easier content updates
-- [ ] Implement actual contact form backend (Resend/SendGrid)
+- [ ] Implement actual contact form backend (Resend/SendGrid) — currently uses FormSubmit.co
 - [ ] Add blog post pagination on Essays page
 - [ ] Create more essay detail pages
 - [ ] Add search functionality
